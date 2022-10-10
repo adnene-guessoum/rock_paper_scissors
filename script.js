@@ -7,19 +7,17 @@ function getComputerChoice() {
 	return choices[Math.floor(Math.random() * choices.length)]
 }
 
-console.log(getComputerChoice());
-
 function playsOneRound(playerSelection, computerChoice)  {
 	// return result of single round in form of a string
 	// case incencitive input for the player!
-	
+
 	playerChoice = playerSelection.toLowerCase();
 
-    switch (playerChoice) {
-    	case (computerChoice):
-    		//replay
+	switch (playerChoice) {
+		case (computerChoice):
+			//replay
 			return "It's a Draw!"
-    		break;
+			break;
 
 		case ('rock'):
 			if (computerChoice === 'paper') {
@@ -44,20 +42,46 @@ function playsOneRound(playerSelection, computerChoice)  {
 				return "You Lose! Rock beats Scissors"
 			}
 			break;
-    }
+	}
 }
 
 // Playing one round :
 const playerSelection = 'Rock'
 const computerSelection = getComputerChoice();
+console.log(computerSelection);
 console.log(playsOneRound(playerSelection, computerSelection)); 
 
+//build the fool game :
 
+function game(numberOfRounds) {
+	let playerScore = 0;
+	let computerScore = 0;
+	for (let i = 0; i < numberOfRounds; i++) {
+		let playerSelection = prompt("what's your pick for this round?");
+		let computerSelection = getComputerChoice();
+		let roundResult =  playsOneRound(playerSelection, computerSelection);
 
+		if (roundResult.startsWith("You Win!")) {
+			playerScore++;
+			console.log(roundResult);
+		} else if (roundResult.startsWith("You Lose!")) {
+			computerScore++;
+			console.log(roundResult);
+		} else {
+			console.log(roundResult);
+		}
+		
+	}
 
+	if (playerScore > computerScore) {
+		return `Congrats! you have scored ${playerScore} points! You won the game !`
+	} else if (computerScore > playerScore) {
+		return `You suck! you only scored ${playerScore} points! You lost the game !`
+	} else {
+		return `It's a Draw. You both scored ${playerScore} points!`
+	}
+}
 
+// invoke the game to play 5 rounds:
 
-
-
-
-
+console.log(game(5));
