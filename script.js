@@ -15,7 +15,6 @@ function playsOneRound(playerSelection, computerChoice)  {
 
 	switch (playerChoice) {
 		case (computerChoice):
-			//replay
 			return "It's a Draw!"
 			break;
 
@@ -45,13 +44,7 @@ function playsOneRound(playerSelection, computerChoice)  {
 	}
 }
 
-// Playing one round :
-const playerSelection = 'Rock'
-const computerSelection = getComputerChoice();
-console.log(computerSelection);
-console.log(playsOneRound(playerSelection, computerSelection)); 
-
-//build the fool game :
+//build the repeated game :
 
 function game(numberOfRounds) {
 	let playerScore = 0;
