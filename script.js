@@ -81,7 +81,10 @@ function game(numberOfRounds) {
 const buttons = document.querySelectorAll('.playerSelection > button');
 	
 let choice = buttons.forEach(button => button.addEventListener('click', function(e) {
-	console.log(playsOneRound(e.target.id, getComputerChoice()))
+	const resultDiv = document.querySelector("#display-result");
+	const result = document.createElement('p');
+	result.textContent = playsOneRound(e.target.id, getComputerChoice());
+	resultDiv.appendChild(result);
 }));
 
 
