@@ -44,8 +44,14 @@ function playsOneRound(playerSelection, computerChoice)  {
 	}
 }
 
-//build the repeated game :
+// get the selection from button click:
 
+const buttons = document.querySelectorAll('.playerSelection > button');
+	
+const choice = buttons.forEach(button => button.addEventListener('click', function(e) { console.log(e.target.id)}));
+
+
+//build the repeated game :
 function game(numberOfRounds) {
 	let playerScore = 0;
 	let computerScore = 0;
