@@ -77,4 +77,3 @@ function game(numberOfRounds) {
 
 // invoke the game to play 5 rounds:
 
-console.log(game(5));
