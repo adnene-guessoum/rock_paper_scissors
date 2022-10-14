@@ -45,25 +45,39 @@ function playsOneRound(playerSelection, computerChoice)  {
 }
 
 //build the repeated game :
-function game(numberOfRounds) {
+function game(numberOfRounds, playerSelection, computerSelection) {
 	let playerScore = 0;
 	let computerScore = 0;
 	for (let i = 0; i < numberOfRounds; i++) {
-		let playerSelection = prompt("what's your pick for this round?");
-		let computerSelection = getComputerChoice();
 		let roundResult =  playsOneRound(playerSelection, computerSelection);
 
 		if (roundResult.startsWith("You Win!")) {
 			playerScore++;
-			console.log(roundResult);
+
+			result.textContent = roundResult;
+			resultDiv.appendChild(result);
+
+			scoreBoard.textContent = ` Scoreboard => Your score: ${playerScore} , computer score: ${computerScore}`;
+			resultDiv.appendChild(scoreBoard);
+
 		} else if (roundResult.startsWith("You Lose!")) {
 			computerScore++;
-			console.log(roundResult);
+			result.textContent = roundResult;
+			resultDiv.appendChild(result);
+			resultDiv.appendChild(scoreBoard);
+
+			scoreBoard.textContent = ` Scoreboard => Your score: ${playerScore} , computer score: ${computerScore}`;
+			resultDiv.appendChild(scoreBoard);
 		} else {
-			console.log(roundResult);
+			result.textContent = roundResult;
+
+			resultDiv.appendChild(result);
+			resultDiv.appendChild(scoreBoard);
+
+			scoreBoard.textContent = ` Scoreboard => Your score: ${playerScore} , computer score: ${computerScore}`;
+			resultDiv.appendChild(scoreBoard);
 		}
-		
-	}
+	}	
 
 	if (playerScore > computerScore) {
 		return `Congrats! you have scored ${playerScore} points! You won the game !`
@@ -81,10 +95,12 @@ function game(numberOfRounds) {
 const buttons = document.querySelectorAll('.playerSelection > button');
 const resultDiv = document.querySelector("#display-result");
 const result = document.createElement('p');
-	
+const scoreBoard = document.createElement('div');
+const finalResult = document.createElement('h3');
+
 let choice = buttons.forEach(button => button.addEventListener('click', function(e) {
-	result.textContent = playsOneRound(e.target.id, getComputerChoice());
-	resultDiv.appendChild(result);
+	finalResult.textContent = game(5, e.target.id, getComputerChoice());
+	resultDiv.appendChild(finalResult);
 }));
 
 
