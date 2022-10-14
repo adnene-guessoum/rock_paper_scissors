@@ -44,40 +44,50 @@ function playsOneRound(playerSelection, computerChoice)  {
 	}
 }
 
+function displayRoundResult(roundResult) {
+
+	let winner;
+
+	if (roundResult.startsWith("You Win!")) {
+		result.textContent = roundResult;
+		resultDiv.appendChild(result);
+		winner = 'player';
+
+	} else if (roundResult.startsWith("You Lose!")) {
+		result.textContent = roundResult;
+		resultDiv.appendChild(result);
+		winner = 'computer';
+
+	} else {
+		result.textContent = roundResult;
+		resultDiv.appendChild(result);
+		winner = 'none';
+	}
+
+	return winner;
+}
+
+function updateScoreBoard(winner) {
+
+	if (winner === 'computer') {
+		computerScore++;
+		scoreBoard.textContent = ` Scoreboard => Your score: ${playerScore} , computer score: ${computerScore}`;
+		resultDiv.appendChild(scoreBoard);
+	} else if (winner === 'player'){
+		playerScore++;
+		scoreBoard.textContent = ` Scoreboard => Your score: ${playerScore} , computer score: ${computerScore}`;
+		resultDiv.appendChild(scoreBoard);
+	} else {
+		scoreBoard.textContent = ` Scoreboard => Your score: ${playerScore} , computer score: ${computerScore}`;
+		resultDiv.appendChild(scoreBoard);
+	}
+}
 //build the repeated game :
-function game(numberOfRounds, playerSelection, computerSelection) {
-	let playerScore = 0;
-	let computerScore = 0;
-	for (let i = 0; i < numberOfRounds; i++) {
-		let roundResult =  playsOneRound(playerSelection, computerSelection);
+function displayFinalResult(playerScore, computerScore) {
 
-		if (roundResult.startsWith("You Win!")) {
-			playerScore++;
-
-			result.textContent = roundResult;
-			resultDiv.appendChild(result);
-
-			scoreBoard.textContent = ` Scoreboard => Your score: ${playerScore} , computer score: ${computerScore}`;
-			resultDiv.appendChild(scoreBoard);
-
-		} else if (roundResult.startsWith("You Lose!")) {
-			computerScore++;
-			result.textContent = roundResult;
-			resultDiv.appendChild(result);
-			resultDiv.appendChild(scoreBoard);
-
-			scoreBoard.textContent = ` Scoreboard => Your score: ${playerScore} , computer score: ${computerScore}`;
-			resultDiv.appendChild(scoreBoard);
-		} else {
-			result.textContent = roundResult;
-
-			resultDiv.appendChild(result);
-			resultDiv.appendChild(scoreBoard);
-
-			scoreBoard.textContent = ` Scoreboard => Your score: ${playerScore} , computer score: ${computerScore}`;
-			resultDiv.appendChild(scoreBoard);
-		}
-	}	
+	if (playerScore < 5 && computerScore < 5) {
+		return "No winner Yet !"
+	}
 
 	if (playerScore > computerScore) {
 		return `Congrats! you have scored ${playerScore} points! You won the game !`
@@ -86,6 +96,7 @@ function game(numberOfRounds, playerSelection, computerSelection) {
 	} else {
 		return `It's a Draw. You both scored ${playerScore} points!`
 	}
+
 }
 
 // invoke the game to play 5 rounds: removed for the ui tests (assignement)
@@ -98,9 +109,18 @@ const result = document.createElement('p');
 const scoreBoard = document.createElement('div');
 const finalResult = document.createElement('h3');
 
+let playerScore = 0;
+let computerScore = 0;
+
 let choice = buttons.forEach(button => button.addEventListener('click', function(e) {
-	finalResult.textContent = game(5, e.target.id, getComputerChoice());
+
+	let round = playsOneRound(e.target.id, getComputerChoice());
+	let roundWinner = displayRoundResult(round);
+
+	updateScoreBoard(roundWinner); 
+
+	finalResult.textContent = displayFinalResult(playerScore, computerScore);
+
 	resultDiv.appendChild(finalResult);
 }));
-
 
